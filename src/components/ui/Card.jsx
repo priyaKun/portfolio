@@ -1,16 +1,18 @@
+// src/components/ui/Card.jsx
 import React from 'react';
 
-const Card = ({ title, children }) => (
-  <div style={{
-    border: '2px dashed #ffa07a',
-    padding: '20px',
-    margin: '10px 0',
-    borderRadius: '15px',
-    backgroundColor: '#fffaf0'
-  }}>
-    <h3>{title}</h3>
-    <div>{children}</div>
+const Card = ({ children, title, customStyle }) => (
+  <div style={{ ...defaultStyle, ...customStyle }}>
+    {title && <h4 style={{ marginBottom: '0.5rem' }}>{title}</h4>}
+    {children}
   </div>
 );
+
+const defaultStyle = {
+  backgroundColor: '#fff',
+  borderRadius: '1rem',
+  padding: '1.5rem',
+  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+};
 
 export default Card;

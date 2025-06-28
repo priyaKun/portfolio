@@ -1,151 +1,234 @@
 import React, { useState } from 'react';
 import Button from '../components/ui/Button';
+import { Helmet } from 'react-helmet';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+    setIsSubmitting(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated delay
+      setSubmitStatus({ success: true, message: 'Message sent successfully!' });
+      setFormData({ name: '', email: '', message: '' });
+    } catch {
+      setSubmitStatus({ success: false, message: 'Oops! Something went wrong. Try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <section style={{
-      maxWidth: '800px',
-      margin: '0 auto',
-      padding: '2rem 1rem'
-    }}>
-      <h2 style={{
-        fontSize: '2rem',
-        fontWeight: 700,
-        marginBottom: '2rem',
-        color: '#2d3748',
-        position: 'relative',
-        display: 'inline-block',
-        ':after': {
-          content: '""',
-          position: 'absolute',
-          bottom: '-10px',
-          left: 0,
-          width: '50px',
-          height: '3px',
-          background: '#3182ce'
-        }
-      }}>Get In Touch</h2>
-      
-      <form onSubmit={handleSubmit} style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1.5rem',
-        marginTop: '2rem'
-      }}>
-        <div>
-          <label htmlFor="name" style={{
-            display: 'block',
-            marginBottom: '0.5rem',
-            fontWeight: 500,
-            color: '#2d3748'
-          }}>Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '1px solid #e2e8f0',
-              borderRadius: '4px',
-              transition: 'border 0.2s',
-              ':focus': {
-                outline: 'none',
-                borderColor: '#3182ce',
-                boxShadow: '0 0 0 3px rgba(49, 130, 206, 0.2)'
-              }
-            }}
-          />
+    <>
+      <Helmet>
+        <title>Contact | Keerthipriya</title>
+        <meta name="description" content="Reach out for collaborations, freelance work or inquiries." />
+      </Helmet>
+
+      <section style={styles.section} id="contact">
+        <div style={styles.container}>
+          {/* NEW Modern Header */}
+          <div style={styles.newHeader}>
+            <h1 style={styles.newTitle}>Let’s Connect</h1>
+            <p style={styles.newSubtitle}>
+              Feel free to drop a message — whether it’s collaboration, feedback, or just a hello 👋
+            </p>
+          </div>
+
+          {/* FORM & INFO SECTION */}
+          <div style={styles.content}>
+            <form onSubmit={handleSubmit} style={styles.form}>
+              {submitStatus && (
+                <div style={{
+                  ...styles.statusMessage,
+                  backgroundColor: submitStatus.success ? '#ecfdf5' : '#fef2f2',
+                  borderColor: submitStatus.success ? '#34d399' : '#f87171',
+                  color: submitStatus.success ? '#065f46' : '#7f1d1d'
+                }}>
+                  {submitStatus.message}
+                </div>
+              )}
+
+              <div style={styles.formGroup}>
+                <label htmlFor="name" style={styles.label}>Your Name</label>
+                <input
+                  id="name" name="name" type="text" required
+                  placeholder="Please Enter your name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  style={styles.input}
+                />
+              </div>
+
+              <div style={styles.formGroup}>
+                <label htmlFor="email" style={styles.label}>Email Address</label>
+                <input
+                  id="email" name="email" type="email" required
+                  placeholder="name@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  style={styles.input}
+                />
+              </div>
+
+              <div style={styles.formGroup}>
+                <label htmlFor="message" style={styles.label}>Message</label>
+                <textarea
+                  id="message" name="message" rows="6" required
+                  placeholder="Write here"
+                  value={formData.message}
+                  onChange={handleChange}
+                  style={styles.textarea}
+                ></textarea>
+              </div>
+
+              <Button type="submit" disabled={isSubmitting} style={styles.button}>
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </Button>
+            </form>
+
+            {/* Contact Info */}
+            <div style={styles.info}>
+              <h3 style={styles.infoTitle}>Reach Me At</h3>
+              <ul style={styles.infoList}>
+                <li style={styles.infoItem}>📧 keerthipriya@example.com</li>
+                <li style={styles.infoItem}>📞 +91 98765 43210</li>
+                <li style={styles.infoItem}>📍 Andhra Pradesh, India</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        
-        <div>
-          <label htmlFor="email" style={{
-            display: 'block',
-            marginBottom: '0.5rem',
-            fontWeight: 500,
-            color: '#2d3748'
-          }}>Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '1px solid #e2e8f0',
-              borderRadius: '4px',
-              transition: 'border 0.2s',
-              ':focus': {
-                outline: 'none',
-                borderColor: '#3182ce',
-                boxShadow: '0 0 0 3px rgba(49, 130, 206, 0.2)'
-              }
-            }}
-          />
-        </div>
-        
-        <div>
-          <label htmlFor="message" style={{
-            display: 'block',
-            marginBottom: '0.5rem',
-            fontWeight: 500,
-            color: '#2d3748'
-          }}>Message</label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-            rows="5"
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              border: '1px solid #e2e8f0',
-              borderRadius: '4px',
-              transition: 'border 0.2s',
-              resize: 'vertical',
-              ':focus': {
-                outline: 'none',
-                borderColor: '#3182ce',
-                boxShadow: '0 0 0 3px rgba(49, 130, 206, 0.2)'
-              }
-            }}
-          ></textarea>
-        </div>
-        
-        <Button type="submit" style={{
-          alignSelf: 'flex-start',
-          padding: '0.75rem 2rem'
-        }}>Send Message</Button>
-      </form>
-    </section>
+      </section>
+    </>
   );
+};
+
+// STYLES
+const styles = {
+  section: {
+    padding: '5rem 1rem',
+    backgroundColor: '#f9fafb',
+    fontFamily: "'Inter', sans-serif",
+  },
+  container: {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    backgroundColor: '#ffffff',
+    borderRadius: '12px',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.04)',
+    overflow: 'hidden',
+  },
+
+  // ⭐ New header styling (radial background)
+  newHeader: {
+    background: 'radial-gradient(circle at top left, #f3c1f7, #d0e5fc)',
+    padding: '4rem 2rem',
+    textAlign: 'center',
+    color: '#1e293b',
+    borderBottom: '1px solid #e5e7eb',
+  },
+  newTitle: {
+    fontSize: '2.75rem',
+    fontWeight: '700',
+    marginBottom: '1rem',
+    letterSpacing: '0.5px',
+  },
+  newSubtitle: {
+    fontSize: '1.1rem',
+    color: '#4b5563',
+    maxWidth: '600px',
+    margin: '0 auto',
+    lineHeight: 1.6,
+  },
+
+  content: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '3rem',
+    padding: '3rem',
+    alignItems: 'flex-start',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1.5rem',
+  },
+  formGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem',
+  },
+  label: {
+    fontSize: '0.9rem',
+    fontWeight: 500,
+    color: '#374151',
+  },
+  input: {
+    padding: '0.875rem',
+    borderRadius: '8px',
+    border: '1px solid #d1d5db',
+    backgroundColor: '#f9fafb',
+    color: '#111827',
+    fontSize: '1rem',
+  },
+  textarea: {
+    padding: '0.875rem',
+    borderRadius: '8px',
+    border: '1px solid #d1d5db',
+    backgroundColor: '#f9fafb',
+    color: '#111827',
+    fontSize: '1rem',
+    resize: 'vertical',
+  },
+  button: {
+    padding: '1rem 2rem',
+    backgroundColor: '#2563eb',
+    color: '#fff',
+    fontWeight: 600,
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'background 0.3s ease',
+  },
+  statusMessage: {
+    padding: '1rem',
+    borderRadius: '6px',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    fontSize: '0.95rem',
+  },
+  info: {
+    padding: '1rem',
+    borderRadius: '8px',
+    backgroundColor: '#f1f5f9',
+  },
+  infoTitle: {
+    fontSize: '1.25rem',
+    fontWeight: 600,
+    marginBottom: '1rem',
+    color: '#1f2937',
+  },
+  infoList: {
+    listStyle: 'none',
+    padding: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+    color: '#4b5563',
+  },
+  infoItem: {
+    fontSize: '1rem',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+  },
 };
 
 export default Contact;
