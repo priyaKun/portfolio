@@ -24,7 +24,7 @@ const About = () => (
 
           <p style={styles.paragraph}>
             I've contributed to team projects like <strong>StudyKart</strong> and <strong>Smart Power Prediction</strong>, 
-            and completed a remote internship as a Software Development Intern at iQuadra Technologies.
+            and completed a internship as a Software Development Intern at iQuadra Technologies.
             I'm also an <strong>AWS Certified Cloud Practitioner</strong> who enjoys participating in coding events and technical clubs.
           </p>
 

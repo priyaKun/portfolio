@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import Button from '../components/ui/Button';
-import profileImage from '../assets/images/photo.png'; 
+import profileImage from '../assets/images/titlePic.jpg'; 
 
 const Home = () => {
   const navigate = useNavigate();
@@ -25,21 +25,13 @@ const Home = () => {
             <Button style={styles.primaryButton} onClick={() => navigate('/contact')}>
               Hire Me
             </Button>
-            <a
-              href="https://wa.me/918309515583"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.secondaryButton}
-            >
-              WhatsApp
-            </a>
           </div>
         </div>
 
         {/* RIGHT: Image Block */}
         <div style={styles.right}>
           <div style={styles.imageWrapper}>
-            <img src={profileImage} alt="Keerthipriya" style={styles.image} />
+            <img src={profileImage} alt="Keerthipriya - Full Stack Developer" style={styles.image} />
             <span style={styles.badge1}>Full Stack Dev</span>
             <span style={styles.badge2}>Cloud Learner</span>
           </div>
@@ -88,8 +80,6 @@ const styles = {
   },
   name: {
     color: accentColor,
-    textDecoration: 'underline',
-    textDecorationThickness: '2px',
   },
   subheading: {
     fontSize: '1.125rem',

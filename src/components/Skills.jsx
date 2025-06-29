@@ -15,7 +15,7 @@ const Skills = () => {
           <h4 style={headingStyle}>{category}</h4>
           <ul style={listStyle}>
             {skills.map((skill, idx) => (
-              <li key={idx} style={itemStyle}>• {skill}</li>
+              <li key={idx}>{skill}</li>
             ))}
           </ul>
         </div>
