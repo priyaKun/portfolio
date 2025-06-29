@@ -19,7 +19,7 @@ const Footer = () => (
           {['Home', 'About', 'Projects', 'Contact'].map((item) => (
             <li key={item}>
               <a
-                href={`/${item.toLowerCase()}`}
+                href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
                 style={styles.link}
                 onMouseOver={(e) => (e.currentTarget.style.color = '#ffffff')}
                 onMouseOut={(e) => (e.currentTarget.style.color = '#a0aec0')}

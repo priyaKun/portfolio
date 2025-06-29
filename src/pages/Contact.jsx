@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Button from '../components/ui/Button';
 import { Helmet } from 'react-helmet';
 
@@ -6,6 +6,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const formRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,9 +16,19 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated delay
-      setSubmitStatus({ success: true, message: 'Message sent successfully!' });
-      setFormData({ name: '', email: '', message: '' });
+      const response = await fetch('http://localhost:8000/contact', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: new FormData(formRef.current),
+      });
+      if (response.ok) {
+        setSubmitStatus({ success: true, message: 'Message sent successfully!' });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setSubmitStatus({ success: false, message: 'Oops! Something went wrong. Try again.' });
+      }
     } catch {
       setSubmitStatus({ success: false, message: 'Oops! Something went wrong. Try again.' });
     } finally {
@@ -44,7 +55,7 @@ const Contact = () => {
 
           {/* FORM & INFO SECTION */}
           <div style={styles.content}>
-            <form onSubmit={handleSubmit} style={styles.form}>
+            <form ref={formRef} onSubmit={handleSubmit} style={styles.form}>
               {submitStatus && (
                 <div style={{
                   ...styles.statusMessage,
@@ -98,8 +109,7 @@ const Contact = () => {
             <div style={styles.info}>
               <h3 style={styles.infoTitle}>Reach Me At</h3>
               <ul style={styles.infoList}>
-                <li style={styles.infoItem}>📧 keerthipriya@example.com</li>
-                <li style={styles.infoItem}>📞 +91 98765 43210</li>
+                <li style={styles.infoItem}>📧 keerthypriya2105@gmail.com</li>
                 <li style={styles.infoItem}>📍 Andhra Pradesh, India</li>
               </ul>
             </div>
