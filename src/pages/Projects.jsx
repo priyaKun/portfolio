@@ -77,11 +77,11 @@ const projects = [
     demo: 'https://priyakun.github.io/spotifyClone/',
   },
   {
-    name: 'StudyKart – Online Learning Platform',
+    name: 'Trip Planner AI',
     description:
-      'A collaborative tutoring platform with responsive design, user authentication, and interactive course management features.',
-    tech: ['React', 'Node.js', 'MongoDB', 'JWT'],
-    link: 'https://github.com/StudyKart-com/',
+      'An AI-powered travel itinerary generator that creates personalized day-wise trip plans based on destination, number of days, travel theme, and pace. Built with a React frontend and a Spring Boot backend integrated with OpenAI for natural language itinerary generation.',
+    tech: ['React', 'Spring Boot', 'OpenAI API', 'REST'],
+    link: 'https://github.com/priyaKun/travel-frontend.git', 
   },
   {
     name: 'Smart Home Power Prediction',
