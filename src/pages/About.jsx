@@ -1,53 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Skills from '../components/Skills';
 
-const About = () => (
-  <section style={styles.section} id="about">
-    <div style={styles.container}>
-      {/* Gradient Header */}
-      <div style={styles.header}>
-        <h2 style={styles.title}>About Me</h2>
-        <p style={styles.subtitle}>
-          I’m a passionate developer who loves solving real-world problems with clean, efficient code.
-        </p>
-      </div>
+const About = () => {
+  const [isMobile, setIsMobile] = useState(false);
 
-      {/* Content */}
-      <div style={styles.contentWrapper}>
-        {/* LEFT: Bio */}
-        <div style={styles.left}>
-          <h3 style={styles.subHeading}>My Background</h3>
-          <p style={styles.paragraph}>
-            I'm an aspiring full-stack developer currently pursuing my Bachelor's in Computer Science from VIT-AP University.
-            I specialize in building responsive, scalable applications using React and FastAPI.
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return (
+    <section style={styles.section} id="about">
+      <div style={styles.container}>
+        {/* Gradient Header */}
+        <div style={styles.header}>
+          <h2 style={styles.title}>About Me</h2>
+          <p style={styles.subtitle}>
+            I’m a passionate developer who loves solving real-world problems with clean, efficient code.
           </p>
+        </div>
 
-          <p style={styles.paragraph}>
-            I've contributed to team projects like <strong>StudyKart</strong> and <strong>Smart Power Prediction</strong>, 
-            and completed a internship as a Software Development Intern at iQuadra Technologies.
-            I'm also an <strong>AWS Certified Cloud Practitioner</strong> who enjoys participating in coding events and technical clubs.
-          </p>
-
-          <div style={styles.highlightBox}>
-            <h4 style={styles.highlightTitle}>My Approach</h4>
-            <p style={styles.highlightText}>
-              I focus on writing clean, maintainable code and creating accessible, user-friendly interfaces.
-              I'm a fast learner who enjoys solving real-world problems and continuously evolving with the latest tech trends.
+        {/* Content */}
+        <div
+          style={{
+            ...styles.contentWrapper,
+            flexDirection: isMobile ? 'column' : 'row',
+            display: 'flex',
+          }}
+        >
+          {/* LEFT: Bio */}
+          <div style={styles.left}>
+            <h3 style={styles.subHeading}>My Background</h3>
+            <p style={styles.paragraph}>
+              I'm an aspiring full-stack developer currently pursuing my Bachelor's in Computer Science from VIT-AP University.
+              I specialize in building responsive, scalable applications using React and FastAPI.
             </p>
-          </div>
-        </div>
 
-        {/* RIGHT: Skills */}
-        <div style={styles.right}>
-          <div style={styles.skillsCard}>
-            <h3 style={styles.subHeading}>My Skills</h3>
-            <Skills />
+            <p style={styles.paragraph}>
+              I've contributed to team projects like <strong>StudyKart</strong> and <strong>Smart Power Prediction</strong>, 
+              and completed an internship as a Software Development Intern at iQuadra Technologies.
+              I'm also an <strong>AWS Certified Cloud Practitioner</strong> who enjoys participating in coding events and technical clubs.
+            </p>
+
+            <div style={styles.highlightBox}>
+              <h4 style={styles.highlightTitle}>My Approach</h4>
+              <p style={styles.highlightText}>
+                I focus on writing clean, maintainable code and creating accessible, user-friendly interfaces.
+                I'm a fast learner who enjoys solving real-world problems and continuously evolving with the latest tech trends.
+              </p>
+            </div>
+          </div>
+
+          {/* RIGHT: Skills */}
+          <div style={styles.right}>
+            <div style={styles.skillsCard}>
+              <h3 style={styles.subHeading}>My Skills</h3>
+              <Skills />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const styles = {
   section: {
@@ -81,12 +98,11 @@ const styles = {
     lineHeight: 1.6,
   },
   contentWrapper: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
     gap: '3rem',
     alignItems: 'flex-start',
   },
   left: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
     gap: '1.5rem',
@@ -121,6 +137,7 @@ const styles = {
     color: '#1e293b',
   },
   right: {
+    flex: 1,
     width: '100%',
   },
   skillsCard: {

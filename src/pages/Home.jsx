@@ -1,15 +1,24 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
-import profileImage from '../assets/images/Pic.jpg'; 
+import profileImage from '../assets/images/Pic.jpg';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const styles = getStyles(isMobile);
+
   return (
     <section style={styles.section} id="home">
       <div style={styles.container}>
-        {/* LEFT: Text Block */}
-        <div style={styles.left}>
+        <div style={styles.left} data-aos="fade-right">
           <p style={styles.greeting}>Hello 👋</p>
           <h1 style={styles.heading}>
             I’m <span style={styles.name}>Keerthipriya</span>,<br />
@@ -28,8 +37,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* RIGHT: Image Block */}
-        <div style={styles.right}>
+        <div style={styles.right} data-aos="zoom-in" data-aos-delay="100">
           <div style={styles.imageWrapper}>
             <img src={profileImage} alt="Keerthipriya - Full Stack Developer" style={styles.image} />
             <span style={styles.badge1}>Full Stack Dev</span>
@@ -41,11 +49,11 @@ const Home = () => {
   );
 };
 
-const accentColor = '#b34aba'; 
+const accentColor = '#b34aba';
 
-const styles = {
+const getStyles = (isMobile) => ({
   section: {
-    padding: '5rem 2rem',
+    padding: isMobile ? '3rem 1rem' : '5rem 2rem',
     background: 'radial-gradient(circle at top left, #f3c1f7, #d0e5fc)',
     fontFamily: "'Inter', sans-serif",
     minHeight: '100vh',
@@ -56,14 +64,15 @@ const styles = {
     maxWidth: '1200px',
     margin: '0 auto',
     display: 'flex',
+    flexDirection: isMobile ? 'column' : 'row',
     gap: '3rem',
-    flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   left: {
     flex: 1,
-    minWidth: '300px',
+    minWidth: '280px',
+    textAlign: isMobile ? 'center' : 'left',
   },
   greeting: {
     fontSize: '1.25rem',
@@ -72,7 +81,7 @@ const styles = {
     marginBottom: '0.5rem',
   },
   heading: {
-    fontSize: '2.75rem',
+    fontSize: isMobile ? '2rem' : '2.75rem',
     fontWeight: 800,
     lineHeight: 1.3,
     marginBottom: '1rem',
@@ -82,16 +91,18 @@ const styles = {
     color: accentColor,
   },
   subheading: {
-    fontSize: '1.125rem',
+    fontSize: '1.1rem',
     color: '#4b5563',
     marginBottom: '2rem',
     maxWidth: '500px',
     lineHeight: 1.6,
+    margin: isMobile ? '0 auto 2rem' : undefined,
   },
   buttonGroup: {
     display: 'flex',
     gap: '1.25rem',
     flexWrap: 'wrap',
+    justifyContent: isMobile ? 'center' : 'flex-start',
   },
   primaryButton: {
     backgroundColor: accentColor,
@@ -103,22 +114,12 @@ const styles = {
     border: 'none',
     cursor: 'pointer',
   },
-  secondaryButton: {
-    backgroundColor: '#ffffff',
-    border: `2px solid ${accentColor}`,
-    color: accentColor,
-    fontWeight: 600,
-    padding: '0.75rem 1.75rem',
-    borderRadius: '8px',
-    fontSize: '1rem',
-    textDecoration: 'none',
-    transition: 'all 0.3s ease',
-  },
   right: {
     flex: 1,
     position: 'relative',
-    minWidth: '300px',
+    minWidth: '280px',
     textAlign: 'center',
+    marginTop: isMobile ? '2rem' : 0,
   },
   imageWrapper: {
     position: 'relative',
@@ -126,7 +127,7 @@ const styles = {
   },
   image: {
     width: '100%',
-    maxWidth: '360px',
+    maxWidth: isMobile ? '280px' : '360px',
     borderRadius: '16px',
     objectFit: 'cover',
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
@@ -139,7 +140,7 @@ const styles = {
     color: '#fff',
     padding: '0.4rem 1rem',
     borderRadius: '9999px',
-    fontSize: '0.875rem',
+    fontSize: '0.75rem',
     fontWeight: 600,
     boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
   },
@@ -151,10 +152,10 @@ const styles = {
     color: accentColor,
     padding: '0.4rem 1rem',
     borderRadius: '9999px',
-    fontSize: '0.875rem',
+    fontSize: '0.75rem',
     fontWeight: 600,
     boxShadow: '0 2px 6px rgba(0, 0, 0, 0.08)',
   },
-};
+});
 
 export default Home;

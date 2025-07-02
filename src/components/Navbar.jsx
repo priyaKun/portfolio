@@ -1,40 +1,81 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const location = useLocation();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
     { name: 'About', path: '/about' },
     { name: 'Projects', path: '/projects' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Resume', path: '/resume' },
   ];
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <nav style={styles.nav}>
       <div style={styles.container}>
-        <Link to="/" style={styles.brand}>
-          Home
-        </Link>
-        <div style={styles.links}>
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              style={{
-                ...styles.link,
-                ...(location.pathname === item.path ? styles.activeLink : {})
-              }}
+        <Link to="/" style={styles.brand}>Home</Link>
+
+        {/* Hamburger for mobile */}
+        {isMobile ? (
+          <>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              style={styles.hamburger}
+              aria-label="Toggle navigation"
             >
-              {item.name}
-            </Link>
-          ))}
-        </div>
+              ☰
+            </button>
+
+            {isOpen && (
+              <div style={styles.mobileMenu}>
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    style={{
+                      ...styles.mobileLink,
+                      ...(location.pathname === item.path ? styles.activeLink : {})
+                    }}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <div style={styles.links}>
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                style={{
+                  ...styles.link,
+                  ...(location.pathname === item.path ? styles.activeLink : {})
+                }}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </nav>
   );
 };
 
+// Style definitions
 const styles = {
   nav: {
     background: '#ffffff',
@@ -50,6 +91,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    flexWrap: 'wrap',
   },
   brand: {
     fontWeight: 700,
@@ -72,7 +114,28 @@ const styles = {
     color: '#2563eb',
     borderBottom: '2px solid #2563eb',
     paddingBottom: '2px',
-  }
+  },
+  hamburger: {
+    background: 'none',
+    border: 'none',
+    fontSize: '1.5rem',
+    cursor: 'pointer',
+    color: '#1f2937',
+  },
+  mobileMenu: {
+    width: '100%',
+    marginTop: '1rem',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1rem',
+  },
+  mobileLink: {
+    textDecoration: 'none',
+    color: '#4b5563',
+    fontWeight: 500,
+    fontSize: '1.1rem',
+    textAlign: 'left',
+  },
 };
 
 export default Navbar;
