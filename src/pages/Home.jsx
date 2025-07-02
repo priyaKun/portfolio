@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import profileImage from '../assets/images/Pic.jpg';
+import awsBadge from '../assets/images/aws-badge.png'; // ✅ your badge here
 
 const Home = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Home = () => {
   return (
     <section style={styles.section} id="home">
       <div style={styles.container}>
+        {/* Left Section */}
         <div style={styles.left} data-aos="fade-right">
           <p style={styles.greeting}>Hello 👋</p>
           <h1 style={styles.heading}>
@@ -30,6 +32,13 @@ const Home = () => {
             Passionate about building scalable web apps with React, FastAPI, and AWS. I focus on clean UI, efficient backend, and end-to-end product delivery.
           </p>
 
+          {/* ✅ AWS Badge */}
+          <div style={styles.badgeContainer}>
+            <img src={awsBadge} alt="AWS Certified Cloud Practitioner" style={styles.awsImage} />
+            <p style={styles.badgeLabel}>AWS Certified Cloud Practitioner</p>
+          </div>
+
+          {/* Call to Action */}
           <div style={styles.buttonGroup}>
             <Button style={styles.primaryButton} onClick={() => navigate('/contact')}>
               Hire Me
@@ -37,6 +46,7 @@ const Home = () => {
           </div>
         </div>
 
+        {/* Right Section */}
         <div style={styles.right} data-aos="zoom-in" data-aos-delay="100">
           <div style={styles.imageWrapper}>
             <img src={profileImage} alt="Keerthipriya - Full Stack Developer" style={styles.image} />
@@ -93,11 +103,31 @@ const getStyles = (isMobile) => ({
   subheading: {
     fontSize: '1.1rem',
     color: '#4b5563',
-    marginBottom: '2rem',
+    marginBottom: '1.5rem',
     maxWidth: '500px',
     lineHeight: 1.6,
-    margin: isMobile ? '0 auto 2rem' : undefined,
+    margin: isMobile ? '0 auto 1.5rem' : undefined,
   },
+
+  // ✅ AWS Badge Container
+  badgeContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.75rem',
+    marginBottom: '1.5rem',
+    justifyContent: isMobile ? 'center' : 'flex-start',
+    flexWrap: 'wrap',
+  },
+  awsImage: {
+    height: '40px',
+    objectFit: 'contain',
+  },
+  badgeLabel: {
+    fontSize: '0.95rem',
+    fontWeight: 500,
+    color: '#374151',
+  },
+
   buttonGroup: {
     display: 'flex',
     gap: '1.25rem',
