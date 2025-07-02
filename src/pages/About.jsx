@@ -1,70 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Skills from '../components/Skills';
-
-const About = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return (
-    <section style={styles.section} id="about">
-      <div style={styles.container}>
-        {/* Gradient Header */}
-        <div style={styles.header}>
-          <h2 style={styles.title}>About Me</h2>
-          <p style={styles.subtitle}>
-            I’m a passionate developer who loves solving real-world problems with clean, efficient code.
-          </p>
-        </div>
-
-        {/* Content */}
-        <div
-          style={{
-            ...styles.contentWrapper,
-            flexDirection: isMobile ? 'column' : 'row',
-            display: 'flex',
-          }}
-        >
-          {/* LEFT: Bio */}
-          <div style={styles.left}>
-            <h3 style={styles.subHeading}>My Background</h3>
-            <p style={styles.paragraph}>
-              I'm an aspiring full-stack developer currently pursuing my Bachelor's in Computer Science from VIT-AP University.
-              I specialize in building responsive, scalable applications using React and FastAPI.
-            </p>
-
-            <p style={styles.paragraph}>
-              I've contributed to team projects like <strong>StudyKart</strong> and <strong>Smart Power Prediction</strong>, 
-              and completed an internship as a Software Development Intern at iQuadra Technologies.
-              I'm also an <strong>AWS Certified Cloud Practitioner</strong> who enjoys participating in coding events and technical clubs.
-            </p>
-
-            <div style={styles.highlightBox}>
-              <h4 style={styles.highlightTitle}>My Approach</h4>
-              <p style={styles.highlightText}>
-                I focus on writing clean, maintainable code and creating accessible, user-friendly interfaces.
-                I'm a fast learner who enjoys solving real-world problems and continuously evolving with the latest tech trends.
-              </p>
-            </div>
-          </div>
-
-          {/* RIGHT: Skills */}
-          <div style={styles.right}>
-            <div style={styles.skillsCard}>
-              <h3 style={styles.subHeading}>My Skills</h3>
-              <Skills />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
 
 const styles = {
   section: {
@@ -102,7 +37,6 @@ const styles = {
     alignItems: 'flex-start',
   },
   left: {
-    flex: 1,
     display: 'flex',
     flexDirection: 'column',
     gap: '1.5rem',
@@ -137,7 +71,6 @@ const styles = {
     color: '#1e293b',
   },
   right: {
-    flex: 1,
     width: '100%',
   },
   skillsCard: {
@@ -146,6 +79,91 @@ const styles = {
     borderRadius: '10px',
     boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
   },
+};
+
+function useResponsiveStyles(baseStyles) {
+  const [responsive, setResponsive] = useState(baseStyles);
+  useEffect(() => {
+    function handleResize() {
+      setResponsive({
+        ...baseStyles,
+        contentWrapper: {
+          ...baseStyles.contentWrapper,
+          ...(window.innerWidth <= 900 && {
+            gridTemplateColumns: '1fr',
+            gap: '2rem',
+          }),
+        },
+        container: {
+          ...baseStyles.container,
+          ...(window.innerWidth <= 600 && {
+            padding: '1.2rem',
+          }),
+        },
+        title: {
+          ...baseStyles.title,
+          ...(window.innerWidth <= 600 && {
+            fontSize: '2rem',
+          }),
+        },
+      });
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, [baseStyles]);
+  return responsive;
+}
+
+const About = () => {
+  const responsiveStyles = useResponsiveStyles(styles);
+  return (
+    <section style={responsiveStyles.section} id="about">
+      <div style={responsiveStyles.container}>
+        {/* Gradient Header */}
+        <div style={responsiveStyles.header} data-aos="fade-up">
+          <h2 style={responsiveStyles.title}>About Me</h2>
+          <p style={responsiveStyles.subtitle}>
+            I’m a passionate developer who loves solving real-world problems with clean, efficient code.
+          </p>
+        </div>
+
+        {/* Content */}
+        <div style={responsiveStyles.contentWrapper}>
+          {/* LEFT: Bio */}
+          <div style={responsiveStyles.left} data-aos="fade-right" data-aos-delay="100">
+            <h3 style={responsiveStyles.subHeading}>My Background</h3>
+            <p style={responsiveStyles.paragraph}>
+              I'm an aspiring full-stack developer currently pursuing my Bachelor's in Computer Science from VIT-AP University.
+              I specialize in building responsive, scalable applications using React and FastAPI.
+            </p>
+
+            <p style={responsiveStyles.paragraph}>
+              I've contributed to team projects like <strong>StudyKart</strong> and <strong>Smart Power Prediction</strong>, 
+              and completed a internship as a Software Development Intern at iQuadra Technologies.
+              I'm also an <strong>AWS Certified Cloud Practitioner</strong> who enjoys participating in coding events and technical clubs.
+            </p>
+
+            <div style={responsiveStyles.highlightBox}>
+              <h4 style={responsiveStyles.highlightTitle}>My Approach</h4>
+              <p style={responsiveStyles.highlightText}>
+                I focus on writing clean, maintainable code and creating accessible, user-friendly interfaces.
+                I'm a fast learner who enjoys solving real-world problems and continuously evolving with the latest tech trends.
+              </p>
+            </div>
+          </div>
+
+          {/* RIGHT: Skills */}
+          <div style={responsiveStyles.right} data-aos="fade-left" data-aos-delay="200">
+            <div style={responsiveStyles.skillsCard}>
+              <h3 style={responsiveStyles.subHeading}>My Skills</h3>
+              <Skills />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default About;
