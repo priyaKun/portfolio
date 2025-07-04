@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import profileImage from '../assets/images/Pic.jpg';
-import awsBadge from '../assets/images/aws-badge.png'; // ✅ your badge here
+import awsBadge from '../assets/images/aws-badge.png'; 
 
 const Home = () => {
   const navigate = useNavigate();
