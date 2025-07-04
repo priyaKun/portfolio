@@ -1,0 +1,14 @@
+# .gitignore
+
+# Ignore Python bytecode and environment files
+__pycache__/
+*.py[cod]
+*.env
+.env
+
+# VSCode
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
