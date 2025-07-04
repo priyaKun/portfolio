@@ -9,7 +9,6 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
-import ResumeViewer from './pages/ResumeViewer';
 
 const App = () => {
   useEffect(() => {
@@ -42,7 +41,6 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/resume" element={<ResumeViewer />} />
           </Routes>
         </main>
         <Footer />

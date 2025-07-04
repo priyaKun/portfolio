@@ -10,10 +10,13 @@ const Navbar = () => {
     { name: 'About', path: '/about' },
     { name: 'Projects', path: '/projects' },
     { name: 'Contact', path: '/contact' },
-    { name: 'Resume', path: '/resume' },
+    {
+      name: 'Resume',
+      external: true,
+      path: 'https://drive.google.com/file/d/1_rTc8LSEAZLltEQN_cr5vXKnWOq5SA6r/view?usp=sharing', // Replace with your file ID
+    },
   ];
 
-  // Handle window resize
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
@@ -23,9 +26,8 @@ const Navbar = () => {
   return (
     <nav style={styles.nav}>
       <div style={styles.container}>
-        <Link to="/" style={styles.brand}>Home</Link>
+        <Link to="/" style={styles.brand}>Keerthipriya</Link>
 
-        {/* Hamburger for mobile */}
         {isMobile ? (
           <>
             <button
@@ -38,36 +40,61 @@ const Navbar = () => {
 
             {isOpen && (
               <div style={styles.mobileMenu}>
-                {navItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    style={{
-                      ...styles.mobileLink,
-                      ...(location.pathname === item.path ? styles.activeLink : {})
-                    }}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+                {navItems.map((item) =>
+                  item.external ? (
+                    <a
+                      key={item.name}
+                      href={item.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={styles.mobileLink}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      style={{
+                        ...styles.mobileLink,
+                        ...(location.pathname === item.path ? styles.activeLink : {}),
+                      }}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                )}
               </div>
             )}
           </>
         ) : (
           <div style={styles.links}>
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                style={{
-                  ...styles.link,
-                  ...(location.pathname === item.path ? styles.activeLink : {})
-                }}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.external ? (
+                <a
+                  key={item.name}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={styles.link}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  style={{
+                    ...styles.link,
+                    ...(location.pathname === item.path ? styles.activeLink : {}),
+                  }}
+                >
+                  {item.name}
+                </Link>
+              )
+            )}
           </div>
         )}
       </div>
@@ -75,7 +102,6 @@ const Navbar = () => {
   );
 };
 
-// Style definitions
 const styles = {
   nav: {
     background: '#ffffff',
