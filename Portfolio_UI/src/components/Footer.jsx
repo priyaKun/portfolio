@@ -53,7 +53,7 @@ const Footer = () => {
               <FaGithub size={20} />
             </a>
             <a
-              href="https://linkedin.com/in/your-link"
+              href="https://www.linkedin.com/in/keerthypriya-kunapareddy-808434311"
               target="_blank"
               rel="noopener noreferrer"
               style={styles.iconLink}
