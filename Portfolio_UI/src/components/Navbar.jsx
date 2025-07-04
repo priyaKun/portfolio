@@ -26,7 +26,7 @@ const Navbar = () => {
   return (
     <nav style={styles.nav}>
       <div style={styles.container}>
-        <Link to="/" style={styles.brand}>Keerthipriya</Link>
+        <Link to="/" style={styles.brand}>Home</Link>
 
         {isMobile ? (
           <>

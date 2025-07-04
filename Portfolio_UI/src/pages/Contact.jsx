@@ -23,10 +23,12 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await fetch('http://localhost:8000/contact', {
+      const response = await fetch('https://portfolio-cst3.onrender.com/contact', {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(formRef.current),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+           Accept: 'application/json',},
+        body: new URLSearchParams(formData),
       });
       if (response.ok) {
         setSubmitStatus({ success: true, message: 'Message sent successfully!' });
