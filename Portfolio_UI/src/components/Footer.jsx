@@ -34,7 +34,7 @@ const Footer = () => {
                   style={styles.link}
                 >
                   {item}
-                </link>
+                </Link>
               </li>
             ))}
           </ul>
