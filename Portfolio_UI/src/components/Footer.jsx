@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -28,12 +29,12 @@ const Footer = () => {
           <ul style={styles.list}>
             {['Home', 'About', 'Projects', 'Contact'].map((item) => (
               <li key={item}>
-                <a
-                  href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                <Link
+                  to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
                   style={styles.link}
                 >
                   {item}
-                </a>
+                </link>
               </li>
             ))}
           </ul>
