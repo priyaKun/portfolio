@@ -1,88 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
-import ProjectCard from '../components/ProjectCard';
+import React from 'react';
+import { FaGithub, FaExternalLinkAlt, FaMusic, FaMapMarkedAlt, FaBolt } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
+import { Row, Col, Card, Badge, Button } from 'react-bootstrap';
+
+const projectThumbnails = [
+  <FaMusic size={48} className="text-primary mx-auto d-block mb-3" />,
+  <FaMapMarkedAlt size={48} className="text-success mx-auto d-block mb-3" />,
+  <FaBolt size={48} className="text-warning mx-auto d-block mb-3" />,
+];
 
 const Projects = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const styles = {
-    section: {
-      background: 'radial-gradient(circle at top left, #f3c1f7, #d0e5fc)',
-      padding: isMobile ? '3rem 1rem' : '5rem 1rem',
-      fontFamily: "'Inter', sans-serif",
-    },
-    container: {
-      maxWidth: '1200px',
-      margin: '0 auto',
-      backgroundColor: '#ffffff',
-      borderRadius: '12px',
-      padding: isMobile ? '2rem 1rem' : '3rem',
-      boxShadow: '0 4px 8px rgba(0,0,0,0.04)',
-    },
-    header: {
-      textAlign: 'center',
-      marginBottom: '2rem',
-    },
-    title: {
-      fontSize: isMobile ? '2rem' : '2.5rem',
-      fontWeight: 700,
-      color: '#1e293b',
-      marginBottom: '0.5rem',
-    },
-    subtitle: {
-      fontSize: isMobile ? '1rem' : '1.125rem',
-      color: '#4b5563',
-      maxWidth: '600px',
-      margin: '0 auto',
-      lineHeight: 1.6,
-    },
-    grid: {
-      display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px, 1fr))',
-      gap: '1.5rem',
-      marginTop: '2rem',
-    },
-    card: {
-      backgroundColor: '#f9fafb',
-      borderRadius: '12px',
-      padding: '1.5rem',
-      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.03)',
-      transition: 'transform 0.2s, box-shadow 0.2s',
-    },
-    cardHeader: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: '1rem',
-      flexWrap: 'wrap',
-      gap: '0.5rem',
-    },
-    cardTitle: {
-      fontSize: '1.25rem',
-      fontWeight: 600,
-      margin: 0,
-      color: '#1f2937',
-    },
-    iconGroup: {
-      display: 'flex',
-      gap: '0.75rem',
-    },
-    link: {
-      color: '#64748b',
-      textDecoration: 'none',
-    },
-    icon: {
-      transition: 'color 0.3s ease',
-    },
-  };
-
   return (
     <>
       <Helmet>
@@ -93,56 +20,66 @@ const Projects = () => {
         />
       </Helmet>
 
-      <section style={styles.section} id="projects">
-        <div style={styles.container}>
-          <header style={styles.header}>
+      <section className="py-5 bg-light min-vh-100" id="projects">
+        <div className="container">
+          <header className="text-center mb-5">
             <div data-aos="fade-up">
-              <h2 style={styles.title}>My Projects</h2>
+              <h2 className="display-5 fw-bold mb-2 text-primary">My Projects</h2>
             </div>
-            <p style={styles.subtitle} data-aos="fade-up" data-aos-delay="150">
-              A few highlights of the things I’ve built — combining design, data and functionality.
+            <p className="lead text-secondary mx-auto" style={{ maxWidth: '600px' }} data-aos="fade-up" data-aos-delay="150">
+              Here are a few highlights of the projects I’ve built as a student and tech enthusiast. Each project reflects my passion for learning, problem-solving, and building real-world solutions.
             </p>
           </header>
 
-          <div style={styles.grid}>
+          <Row className="g-4">
             {projects.map((project, idx) => (
-              <article key={idx} style={styles.card} data-aos="zoom-in-up" data-aos-delay={idx * 100}>
-                <div style={styles.cardHeader}>
-                  <h3 style={styles.cardTitle}>{project.name}</h3>
-                  <div style={styles.iconGroup}>
-                    {project.link && (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View ${project.name} on GitHub`}
-                        style={styles.link}
-                      >
-                        <FaGithub size={18} style={styles.icon} />
-                      </a>
-                    )}
-                    {project.demo && (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View ${project.name} demo`}
-                        style={styles.link}
-                      >
-                        <FaExternalLinkAlt size={16} style={styles.icon} />
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <ProjectCard
-                  description={project.description}
-                  technologies={project.tech}
-                  github={project.link}
-                  demo={project.demo}
-                />
-              </article>
+              <Col md={6} lg={4} key={idx} data-aos="zoom-in-up" data-aos-delay={idx * 150}>
+                <Card className="h-100 shadow-sm border-0">
+                  <Card.Body className="d-flex flex-column">
+                    {/* Project Thumbnail/Icon */}
+                    {projectThumbnails[idx]}
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                      <Card.Title className="h5 fw-bold mb-0">{project.name}</Card.Title>
+                      <div className="d-flex gap-2">
+                        {project.link && (
+                          <Button
+                            as="a"
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            variant="outline-dark"
+                            size="sm"
+                            aria-label={`View ${project.name} on GitHub`}
+                          >
+                            <FaGithub />
+                          </Button>
+                        )}
+                        {project.demo && (
+                          <Button
+                            as="a"
+                            href={project.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            variant="outline-primary"
+                            size="sm"
+                            aria-label={`View ${project.name} demo`}
+                          >
+                            <FaExternalLinkAlt />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                    <Card.Text className="mb-3 text-secondary">{project.description}</Card.Text>
+                    <div className="mb-2 mt-auto">
+                      {project.tech.map((t, i) => (
+                        <Badge bg="info" text="dark" className="me-2 mb-1" key={i}>{t}</Badge>
+                      ))}
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
             ))}
-          </div>
+          </Row>
         </div>
       </section>
     </>
@@ -153,7 +90,7 @@ const projects = [
   {
     name: 'Spotify Clone',
     description:
-      'A responsive front-end clone of Spotify with modern UI components and smooth animations, built with React and styled-components.',
+      'A responsive front-end clone of Spotify built as a personal learning project. I designed and implemented a modern UI with React and styled-components, focusing on smooth animations and user experience. This project helped me deepen my understanding of component-based architecture and state management.',
     tech: ['React', 'Styled Components', 'Context API'],
     link: 'https://github.com/priyakun/spotifyClone',
     demo: 'https://priyakun.github.io/spotifyClone/',
@@ -161,14 +98,14 @@ const projects = [
   {
     name: 'Trip Planner AI',
     description:
-      'An AI-powered travel itinerary generator that creates personalized day-wise trip plans based on destination, number of days, travel theme, and pace.',
+      'An AI-powered travel itinerary generator created as a team project. I worked on integrating the OpenAI API and building the front-end in React. The app generates personalized trip plans based on user preferences, helping users save time and plan better vacations. This project strengthened my skills in API integration and collaborative development.',
     tech: ['React', 'Spring Boot', 'OpenAI API', 'REST'],
     link: 'https://github.com/priyaKun/trip-planner-ai-.git',
   },
   {
     name: 'Smart Home Power Prediction',
     description:
-      'Machine learning solution using LSTM networks to forecast power consumption patterns from IoT sensor data with 92% accuracy.',
+      'A machine learning solution using LSTM networks to forecast power consumption patterns from IoT sensor data. I led the data preprocessing and model training, achieving 92% accuracy. This project was recognized in a university competition and gave me hands-on experience with ML workflows.',
     tech: ['Python', 'TensorFlow', 'LSTM', 'Pandas'],
     link: 'https://github.com/priyaKun/Smart_house_power_consumption_prediction',
   },
