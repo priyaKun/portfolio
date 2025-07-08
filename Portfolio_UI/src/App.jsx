@@ -3,39 +3,28 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-import Navbar from './components/Navbar';
+import CustomNavbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
+import ScrollToTop from './ScrollToTop';
 
 const App = () => {
   useEffect(() => {
     AOS.init({
-      duration: 800, // animation duration in ms
-      once: true     // whether animation should happen only once
+      duration: 800,
+      once: true
     });
   }, []);
 
   return (
     <BrowserRouter>
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        fontFamily: "'Inter', sans-serif",
-        lineHeight: 1.6,
-        color: '#333'
-      }}>
-        <Navbar />
-        <main style={{
-          flex: 1,
-          maxWidth: '1200px',
-          width: '100%',
-          margin: '0 auto',
-          padding: '2rem 1rem'
-        }}>
+      <ScrollToTop />
+      <div className="d-flex flex-column min-vh-100" style={{ fontFamily: "'Inter', sans-serif", lineHeight: 1.6, color: '#333' }}>
+        <CustomNavbar />
+        <main className="flex-grow-1 container py-4">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
