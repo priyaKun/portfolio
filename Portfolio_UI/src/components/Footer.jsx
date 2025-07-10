@@ -1,143 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const Footer = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
-    <footer style={styles.footer}>
-      <div style={{ ...styles.container, flexDirection: isMobile ? 'column' : 'row', textAlign: isMobile ? 'center' : 'left' }}>
-        
-        {/* Left Column */}
-        <div style={styles.column}>
-          <h3 style={styles.heading}>Keerthipriya</h3>
-          <p style={styles.text}>
-            Full Stack Developer crafting modern web apps with React, FastAPI, and cloud tools.
-          </p>
+    <footer className="pt-5 pb-3 mt-auto" style={{background: 'linear-gradient(90deg, #1f2937 60%, #b34aba 100%)'}}>
+      <Container>
+        <Row className="gy-4 align-items-start text-light">
+          {/* Left: About & CTA */}
+          <Col md={4} className="text-center text-md-start mb-3 mb-md-0">
+            <h3 className="fw-bold mb-2" style={{color:'#fff'}}>Keerthipriya</h3>
+            <p className="mb-2 text-secondary" style={{color:'#e0e0e0'}}>Full Stack Developer & Cloud Enthusiast</p>
+            <div className="fw-semibold" style={{color:'#fff'}}>Let’s Connect!</div>
+          </Col>
+          {/* Center: Quick Links */}
+          <Col md={4} className="text-center mb-3 mb-md-0">
+            <h6 className="fw-bold mb-2" style={{color:'#fff'}}>Quick Links</h6>
+            <ul className="list-unstyled mb-0">
+              {['Home', 'About', 'Projects', 'Contact'].map((item) => (
+                <li key={item} className="mb-1">
+                  <Link
+                    to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                    className="text-secondary text-decoration-none fw-semibold"
+                    style={{color:'#e0e0e0'}}
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Col>
+          {/* Right: Socials */}
+          <Col md={4} className="text-center text-md-end">
+            <h6 className="fw-bold mb-2" style={{color:'#fff'}}>Social</h6>
+            <div className="d-flex justify-content-center justify-content-md-end gap-3">
+              <a
+                href="https://github.com/priyakun"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fs-3 text-light social-icon"
+                aria-label="GitHub"
+                style={{transition:'color 0.2s'}}
+                onMouseOver={e=>e.currentTarget.style.color='#b34aba'}
+                onMouseOut={e=>e.currentTarget.style.color='#fff'}
+              >
+                <FaGithub />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/keerthypriya-kunapareddy-808434311"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fs-3 text-light social-icon"
+                aria-label="LinkedIn"
+                style={{transition:'color 0.2s'}}
+                onMouseOver={e=>e.currentTarget.style.color='#b34aba'}
+                onMouseOut={e=>e.currentTarget.style.color='#fff'}
+              >
+                <FaLinkedin />
+              </a>
+            </div>
+          </Col>
+        </Row>
+        <hr className="border-secondary my-4 opacity-50" />
+        <div className="text-center text-secondary small" style={{color:'#e0e0e0'}}>
+          &copy; {new Date().getFullYear()} Keerthipriya. All rights reserved.
         </div>
-
-        {/* Center Column */}
-        <div style={styles.column}>
-          <h4 style={styles.subheading}>Quick Links</h4>
-          <ul style={styles.list}>
-            {['Home', 'About', 'Projects', 'Contact'].map((item) => (
-              <li key={item}>
-                <Link
-                  to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                  style={styles.link}
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Right Column */}
-        <div style={styles.column}>
-          <h4 style={styles.subheading}>Connect</h4>
-          <div style={{ ...styles.socials, justifyContent: isMobile ? 'center' : 'flex-start' }}>
-            <a
-              href="https://github.com/priyakun"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.iconLink}
-              aria-label="GitHub"
-            >
-              <FaGithub size={20} />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/keerthypriya-kunapareddy-808434311"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.iconLink}
-              aria-label="LinkedIn"
-            >
-              <FaLinkedin size={20} />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div style={styles.bottom}>
-        <p>© {new Date().getFullYear()} Keerthipriya. All rights reserved.</p>
-      </div>
+      </Container>
     </footer>
   );
-};
-
-const styles = {
-  footer: {
-    background: '#1f2937',
-    color: '#a0aec0',
-    padding: '3rem 1rem 2rem',
-    fontFamily: "'Inter', sans-serif",
-  },
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '2rem',
-    flexWrap: 'wrap',
-  },
-  column: {
-    flex: '1 1 250px',
-  },
-  heading: {
-    fontSize: '1.5rem',
-    fontWeight: 700,
-    marginBottom: '1rem',
-    color: '#ffffff',
-  },
-  subheading: {
-    fontSize: '1rem',
-    fontWeight: 600,
-    marginBottom: '1rem',
-    color: '#e2e8f0',
-  },
-  text: {
-    fontSize: '0.95rem',
-    lineHeight: 1.6,
-  },
-  list: {
-    listStyle: 'none',
-    padding: 0,
-    margin: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.5rem',
-  },
-  link: {
-    color: '#a0aec0',
-    textDecoration: 'none',
-    fontSize: '0.95rem',
-    transition: 'color 0.2s ease',
-  },
-  iconLink: {
-    color: '#a0aec0',
-    textDecoration: 'none',
-    marginRight: '1rem',
-    transition: 'color 0.2s ease',
-  },
-  socials: {
-    display: 'flex',
-    gap: '1rem',
-  },
-  bottom: {
-    marginTop: '2rem',
-    textAlign: 'center',
-    fontSize: '0.875rem',
-    paddingTop: '1rem',
-    borderTop: '1px solid #4b5563',
-  },
 };
 
 export default Footer;
