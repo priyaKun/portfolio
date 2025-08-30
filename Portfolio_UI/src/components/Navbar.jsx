@@ -38,7 +38,7 @@ const CustomNavbar = () => {
             ))}
             {/* Download Resume Button */}
             <Nav.Link
-              href="https://drive.google.com/file/d/1_rTc8LSEAZLltEQN_cr5vXKnWOq5SA6r/view?usp=sharing"
+              href="https://drive.google.com/file/d/1cVuzmXSh594JYW466S7ldsuslKfitQ9J/view?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
               className="ms-2"
